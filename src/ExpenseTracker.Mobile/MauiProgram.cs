@@ -51,6 +51,10 @@ public static class MauiProgram
 
                             client.BaseAddress = new Uri(settings.BaseUrl);
                         });
+
+        builder.Services.AddTransient<CreateExpensePage>();
+        builder.Services.AddTransient<CreateExpenseViewModel>();
+
         return builder.Build();
     }
 }

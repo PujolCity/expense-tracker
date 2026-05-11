@@ -5,4 +5,5 @@ namespace ExpenseTracker.Mobile.Services.Api;
 public interface IExpensesApiClient
 {
     Task<List<ExpenseResponse>> GetAsync();
+    Task CreateExpenseAsync(CreateExpenseRequest request);
 }

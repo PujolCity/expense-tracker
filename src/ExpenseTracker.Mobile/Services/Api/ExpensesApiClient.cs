@@ -12,10 +12,19 @@ public class ExpensesApiClient : IExpensesApiClient
         _httpClient = httpClient;
     }
 
+    public async Task CreateExpenseAsync(CreateExpenseRequest request)
+    {
+        var response = await _httpClient.PostAsJsonAsync("expenses", request);
+
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task<List<ExpenseResponse>> GetAsync()
     {
         var response = await _httpClient.GetFromJsonAsync<List<ExpenseResponse>>("expenses");
 
         return response ?? [];
     }
+
+
 }

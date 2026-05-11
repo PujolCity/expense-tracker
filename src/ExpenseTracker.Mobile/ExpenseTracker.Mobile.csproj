@@ -99,6 +99,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\Expenses\CreateExpensePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Expenses\ExpensesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
