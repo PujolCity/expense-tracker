@@ -1,5 +1,6 @@
-﻿using ExpenseTracker.Modules.Expenses.CreateExpense;
+using ExpenseTracker.Modules.Expenses.CreateExpense;
 using ExpenseTracker.Modules.Expenses.DeleteExpense;
+using ExpenseTracker.Modules.Expenses.GetExpenseById;
 using ExpenseTracker.Modules.Expenses.GetExpenses;
 using ExpenseTracker.Modules.Expenses.UpdateExpense;
 using Microsoft.AspNetCore.Routing;
@@ -15,6 +16,7 @@ public static class ExpensesEndpoints
         app.MapGetExpenses();
         app.MapDeleteExpense();
         app.MapUpdateExpense();
+        app.MapGetExpenseById();
 
         return app;
     }

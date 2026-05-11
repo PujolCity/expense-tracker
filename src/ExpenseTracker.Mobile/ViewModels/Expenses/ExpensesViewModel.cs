@@ -32,4 +32,11 @@ public partial class ExpensesViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync(nameof(CreateExpensePage));
     }
+
+    [RelayCommand]
+    public async Task GoToEditExpenseAsync(Guid id)
+    {
+        await Shell.Current.GoToAsync(
+            $"{nameof(EditExpensePage)}?Id={id}");
+    }
 }
