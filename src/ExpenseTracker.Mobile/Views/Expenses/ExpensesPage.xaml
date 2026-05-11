@@ -36,7 +36,6 @@
             SelectionMode="None">
 
             <CollectionView.EmptyView>
-
                 <VerticalStackLayout
                     Padding="40"
                     Spacing="10"
@@ -60,22 +59,22 @@
                         HorizontalTextAlignment="Center" />
 
                 </VerticalStackLayout>
-
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
 
                 <DataTemplate>
-
                     <Border
                         Margin="16,8"
                         Padding="16"
                         BackgroundColor="White"
                         StrokeThickness="0"
                         StrokeShape="RoundRectangle 20">
-
+                        
                         <Grid ColumnDefinitions="*,Auto">
-
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Expense_Tapped" />
+                            </Grid.GestureRecognizers>
                             <!-- INFO -->
 
                             <VerticalStackLayout
@@ -129,7 +128,7 @@
             HorizontalOptions="End"
             VerticalOptions="End"
             Margin="24" >
-            
+
             <Button.Shadow>
                 <Shadow
                     Brush="Black"

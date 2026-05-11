@@ -26,5 +26,18 @@ public class ExpensesApiClient : IExpensesApiClient
         return response ?? [];
     }
 
+    public async Task<ExpenseResponse?> GetExpenseByIdAsync(Guid id)
+    {
+        return await _httpClient.GetFromJsonAsync<ExpenseResponse>(
+            $"expenses/{id}");
+    }
 
+    public async Task UpdateExpenseAsync(Guid id, UpdateExpenseRequest request)
+    {
+        var response = await _httpClient.PatchAsJsonAsync(
+            $"expenses/{id}",
+            request);
+
+        response.EnsureSuccessStatusCode();
+    }
 }
