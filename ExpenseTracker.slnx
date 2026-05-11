@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/ExpenseTracker.Api/ExpenseTracker.Api.csproj" />
     <Project Path="src/ExpenseTracker.Infrastructure/ExpenseTracker.Infrastructure.csproj" />
+    <Project Path="src/ExpenseTracker.Mobile/ExpenseTracker.Mobile.csproj" />
     <Project Path="src/ExpenseTracker.Modules.Accounts/ExpenseTracker.Modules.Accounts.csproj" />
     <Project Path="src/ExpenseTracker.Modules.Budgets/ExpenseTracker.Modules.Budgets.csproj" />
     <Project Path="src/ExpenseTracker.Modules.Expenses/ExpenseTracker.Modules.Expenses.csproj" />
