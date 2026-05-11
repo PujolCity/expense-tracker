@@ -14,6 +14,12 @@ public partial class ExpensesViewModel : ObservableObject
     [ObservableProperty]
     public partial ObservableCollection<ExpenseResponse> Expenses { get; set; } = [];
 
+    [ObservableProperty]
+    private bool isRefreshing;
+
+    [ObservableProperty]
+    private string? errorMessage;
+
     public ExpensesViewModel(IExpensesApiClient expensesApiClient)
     {
         _expensesApiClient = expensesApiClient;
@@ -22,9 +28,23 @@ public partial class ExpensesViewModel : ObservableObject
     [RelayCommand]
     public async Task LoadAsync()
     {
-        var result = await _expensesApiClient.GetAsync();
+        try
+        {
+            IsRefreshing = true;
+            ErrorMessage = null;
 
-        Expenses = new ObservableCollection<ExpenseResponse>(result);
+            var result = await _expensesApiClient.GetAsync();
+
+            Expenses = new ObservableCollection<ExpenseResponse>(result);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "No se pudieron cargar los gastos.";
+        }
+        finally
+        {
+            IsRefreshing = false;
+        }
     }
 
     [RelayCommand]
@@ -34,9 +54,29 @@ public partial class ExpensesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async Task GoToEditExpenseAsync(Guid id)
+    public async Task GoToEditExpenseAsync(ExpenseResponse expense)
     {
-        await Shell.Current.GoToAsync(
-            $"{nameof(EditExpensePage)}?Id={id}");
+        await Shell.Current.GoToAsync(nameof(EditExpensePage),
+            new Dictionary<string, object> { ["Expense"] = expense });
+    }
+
+    [RelayCommand]
+    public async Task DeleteExpenseAsync(ExpenseResponse expense)
+    {
+        if (expense is null)
+            return;
+
+        var confirm = await Shell.Current.DisplayAlertAsync(
+            "Eliminar gasto",
+            $"¿Seguro que querés eliminar \"{expense.Description}\"?",
+            "Eliminar",
+            "Cancelar");
+
+        if (!confirm)
+            return;
+
+        await _expensesApiClient.DeleteAsync(expense.Id);
+
+        Expenses.Remove(expense);
     }
 }

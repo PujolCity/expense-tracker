@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 
 namespace ExpenseTracker.Modules.Expenses.CreateExpense;
 
@@ -15,6 +15,9 @@ public sealed class CreateExpenseValidator
             .GreaterThan(0);
 
         RuleFor(x => x.Date)
+            .NotEmpty();
+
+        RuleFor(x => x.CategoryId)
             .NotEmpty();
     }
 }

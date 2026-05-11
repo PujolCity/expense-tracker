@@ -27,6 +27,8 @@ public sealed class GetExpenseByIdHandler
             expense.Id,
             expense.Description,
             expense.Amount,
-            expense.Date);
+            expense.Date,
+            expense.CategoryId,
+            expense.Category.Name);
     }
 }

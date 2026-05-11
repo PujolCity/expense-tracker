@@ -39,7 +39,7 @@ public partial class ExpensesPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not ExpenseResponse expense)
             return;
 
-        await _viewModel.GoToEditExpenseAsync(expense.Id);
+        await _viewModel.GoToEditExpenseAsync(expense);
 
         ((CollectionView)sender).SelectedItem = null;
     }
@@ -52,6 +52,6 @@ public partial class ExpensesPage : ContentPage
         if (bindableObject.BindingContext is not ExpenseResponse expense)
             return;
 
-        await _viewModel.GoToEditExpenseAsync(expense.Id);
+        await _viewModel.GoToEditExpenseAsync(expense);
     }
 }
