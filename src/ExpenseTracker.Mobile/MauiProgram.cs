@@ -54,7 +54,8 @@ public static class MauiProgram
 
         builder.Services.AddTransient<CreateExpensePage>();
         builder.Services.AddTransient<CreateExpenseViewModel>();
-
+        builder.Services.AddTransient<EditExpensePage>();
+        builder.Services.AddTransient<EditExpenseViewModel>();
         return builder.Build();
     }
 }

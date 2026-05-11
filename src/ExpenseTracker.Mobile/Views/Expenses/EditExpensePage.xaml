@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ExpenseTracker.Mobile.Views.Expenses.EditExpensePage"
+    Title="Editar gasto"
+    BackgroundColor="#F3F4F6">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="18">
+
+            <Label
+                Text="Editar gasto"
+                FontSize="32"
+                FontAttributes="Bold"
+                TextColor="#111827" />
+
+            <Border
+                Padding="18"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 20">
+
+                <VerticalStackLayout Spacing="16">
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Descripción" TextColor="#374151" />
+
+                        <Entry
+                            Placeholder="Ej: Supermercado"
+                            Text="{Binding Description}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Monto" TextColor="#374151" />
+
+                        <Entry
+                            Placeholder="Ej: 12500"
+                            Keyboard="Numeric"
+                            Text="{Binding Amount}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Fecha" TextColor="#374151" />
+
+                        <DatePicker
+                            Date="{Binding Date}"
+                            MaximumDate="{Binding MaxDate}" />
+                    </VerticalStackLayout>
+
+                    <Button
+                        Text="Guardar cambios"
+                        Command="{Binding SaveCommand}"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="14"
+                        HeightRequest="52" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
