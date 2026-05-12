@@ -29,18 +29,20 @@ public partial class EditExpenseViewModel :
         _apiClient = apiClient;
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(
+       IDictionary<string, object> query)
     {
-        if (!query.TryGetValue("Id", out var value))
+        if (!query.TryGetValue("Expense", out var value))
             return;
 
-        _expenseId = Guid.Parse(value.ToString()!);
+        if (value is not ExpenseResponse expense)
+            return;
 
-        var expense = await _apiClient.GetExpenseByIdAsync(_expenseId);
+        _expenseId = expense.Id;
 
-        Description = expense?.Description ?? string.Empty;
-        Amount = expense?.Amount.ToString() ?? string.Empty;
-        Date = expense?.Date ?? DateTime.Today;
+        Description = expense.Description;
+        Amount = expense.Amount.ToString("0.##");
+        Date = expense.Date;
     }
 
     [RelayCommand]
@@ -55,20 +57,6 @@ public partial class EditExpenseViewModel :
             Amount = parsedAmount,
             Date = Date
         };
-
-        var expense = await _apiClient.GetExpenseByIdAsync(_expenseId);
-
-        if (expense is null)
-        {
-            await Shell.Current.DisplayAlertAsync(
-                "Error",
-                "No se encontró el gasto.",
-                "OK");
-
-            await Shell.Current.GoToAsync("..");
-
-            return;
-        }
 
         await _apiClient.UpdateExpenseAsync(_expenseId, request);
 

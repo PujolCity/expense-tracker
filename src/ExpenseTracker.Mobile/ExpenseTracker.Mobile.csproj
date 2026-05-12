@@ -90,6 +90,9 @@
 	  <MauiAsset Update="Resources\Raw\appsettings.Android.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\appsettings.AndroidPhysical.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </MauiAsset>
 	  <MauiAsset Update="Resources\Raw\appsettings.Development.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </MauiAsset>
