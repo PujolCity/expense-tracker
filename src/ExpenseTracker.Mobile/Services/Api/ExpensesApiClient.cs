@@ -19,6 +19,13 @@ public class ExpensesApiClient : IExpensesApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task DeleteAsync(Guid id)
+    {
+        var response = await _httpClient.DeleteAsync($"expenses/{id}");
+
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task<List<ExpenseResponse>> GetAsync()
     {
         var response = await _httpClient.GetFromJsonAsync<List<ExpenseResponse>>("expenses");

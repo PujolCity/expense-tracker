@@ -1,4 +1,4 @@
-﻿using ExpenseTracker.Modules.Expenses.Domain;
+using ExpenseTracker.Modules.Expenses.Domain;
 using ExpenseTracker.Modules.Expenses.Persistence;
 
 namespace ExpenseTracker.Modules.Expenses.CreateExpense;
@@ -19,7 +19,8 @@ public sealed class CreateExpenseHandler
         var expense = new Expense(
             request.Description,
             request.Amount,
-            request.Date);
+            request.Date,
+            request.CategoryId);
 
         _dbContext.Expenses.Add(expense);
 

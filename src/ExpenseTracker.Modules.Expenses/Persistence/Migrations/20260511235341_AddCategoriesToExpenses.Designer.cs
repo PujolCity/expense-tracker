@@ -3,6 +3,7 @@ using System;
 using ExpenseTracker.Modules.Expenses.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ExpenseTracker.Modules.Expenses.Persistence.Migrations
 {
     [DbContext(typeof(ExpensesDbContext))]
-    partial class ExpensesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260511235341_AddCategoriesToExpenses")]
+    partial class AddCategoriesToExpenses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

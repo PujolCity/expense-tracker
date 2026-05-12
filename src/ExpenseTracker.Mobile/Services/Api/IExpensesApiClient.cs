@@ -8,4 +8,5 @@ public interface IExpensesApiClient
     Task CreateExpenseAsync(CreateExpenseRequest request);
     Task UpdateExpenseAsync(Guid id, UpdateExpenseRequest request);
     Task<ExpenseResponse?> GetExpenseByIdAsync(Guid id);
+    Task DeleteAsync(Guid id);
 }

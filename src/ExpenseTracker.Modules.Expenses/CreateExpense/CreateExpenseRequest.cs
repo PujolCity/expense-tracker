@@ -1,6 +1,7 @@
-﻿namespace ExpenseTracker.Modules.Expenses.CreateExpense;
+namespace ExpenseTracker.Modules.Expenses.CreateExpense;
 
 public sealed record CreateExpenseRequest(
     string Description,
     decimal Amount,
-    DateTimeOffset Date);
+    DateTimeOffset Date,
+    Guid CategoryId);

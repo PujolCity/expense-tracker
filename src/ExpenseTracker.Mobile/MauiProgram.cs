@@ -2,8 +2,6 @@ using ExpenseTracker.Mobile.Services.Api;
 using ExpenseTracker.Mobile.ViewModels.Expenses;
 using ExpenseTracker.Mobile.Views.Expenses;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace ExpenseTracker.Mobile;
 
@@ -20,42 +18,50 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        using var appSettingsStream = FileSystem
-        .OpenAppPackageFileAsync("appsettings.json")
-        .Result;
+        var configFile = GetConfigFileName();
 
-        builder.Configuration.AddJsonStream(appSettingsStream);
+        using var stream = FileSystem.OpenAppPackageFileAsync(configFile).GetAwaiter().GetResult();
 
-#if ANDROID
-        using var androidSettingsStream = FileSystem
-            .OpenAppPackageFileAsync("appsettings.Android.json")
-            .Result;
+        var configuration = new ConfigurationBuilder()
+            .AddJsonStream(stream)
+            .Build();
 
-        builder.Configuration.AddJsonStream(androidSettingsStream);
-#endif
+        builder.Configuration.AddConfiguration(configuration);
 
-#if DEBUG
-        builder.Logging.AddDebug();
-#endif
-        builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection(ApiSettings.SectionName));
+        builder.Services.Configure<ApiSettings>(
+            builder.Configuration.GetSection(nameof(ApiSettings)));
+
+        var apiSettings = builder.Configuration
+            .GetSection(nameof(ApiSettings))
+            .Get<ApiSettings>()!;
+
+        builder.Services.AddHttpClient<IExpensesApiClient, ExpensesApiClient>(client =>
+        {
+            client.BaseAddress = new Uri(apiSettings.BaseUrl);
+        });
+
         builder.Services.AddSingleton<ExpensesViewModel>();
-
         builder.Services.AddSingleton<ExpensesPage>();
-
-        builder.Services.AddHttpClient<IExpensesApiClient, ExpensesApiClient>(
-                        (services, client) =>
-                        {
-                            var settings = services
-                                .GetRequiredService<IOptions<ApiSettings>>()
-                                .Value;
-
-                            client.BaseAddress = new Uri(settings.BaseUrl);
-                        });
-
         builder.Services.AddTransient<CreateExpensePage>();
         builder.Services.AddTransient<CreateExpenseViewModel>();
         builder.Services.AddTransient<EditExpensePage>();
         builder.Services.AddTransient<EditExpenseViewModel>();
+
         return builder.Build();
+    }
+
+    static string GetConfigFileName()
+    {
+#if RELEASE
+    return "appsettings.Production.json";
+#else
+        if (DeviceInfo.Platform == DevicePlatform.Android &&
+            DeviceInfo.DeviceType == DeviceType.Physical)
+        {
+            return "appsettings.AndroidPhysical.json";
+        }
+
+        return "appsettings.Development.json";
+#endif
     }
 }
